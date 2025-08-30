@@ -8,19 +8,19 @@ import yt_dlp
 app = Flask(__name__)
 
 
-def download_video(url, output_path="static/video.mp4"):
+def download_video(url, output_path="dump/video.mp4"):
     if os.path.exists(output_path):
         os.remove(output_path)
-    os.makedirs("static", exist_ok=True)
+    os.makedirs("dump", exist_ok=True)
     ydl_opts = {'format': 'mp4/best', 'outtmpl': output_path}
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
     return output_path
 
-def extract_audio(video_path, audio_path="static/audio.wav"):
+def extract_audio(video_path, audio_path="dump/audio.wav"):
     if os.path.exists(audio_path):
         os.remove(audio_path)
-    os.makedirs("static", exist_ok=True)
+    os.makedirs("dump", exist_ok=True)
     video = VideoFileClip(video_path)
     video.audio.write_audiofile(audio_path)
     return audio_path
