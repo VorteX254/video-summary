@@ -1,17 +1,15 @@
 FROM python:3
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+RUN useradd -m -u 1000 user
 
-# Set working directory
-WORKDIR /app
+# Switch to the "user" user
+USER user
 
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
+COPY --chown=user ./requirements.txt .
 
+WORKDIR /api
+
+RUN pip install --upgrade pip
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
