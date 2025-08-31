@@ -4,9 +4,16 @@ from moviepy import VideoFileClip
 import whisper
 from transformers import pipeline
 import yt_dlp
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
 
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["3 per minute"]  # fallback
+)
 
 def download_video(url, output_path="dump/video.mp4"):
     if os.path.exists(output_path):
@@ -63,6 +70,7 @@ def summarize_text(text, chunk_size=500):
     return bullets
 
 @app.route("/", methods=["GET", "POST"])
+@limiter.limit("2 per minute")
 def index():
     
     summary = None

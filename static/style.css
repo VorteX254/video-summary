@@ -355,3 +355,10 @@ button:active::after {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.summary pre {
+  white-space: pre-wrap;  
+  word-wrap: break-word;   
+  overflow-wrap: break-word;
+  background-color: rgba(215, 215, 215, 1);
+}
