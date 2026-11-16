@@ -1,8 +1,10 @@
-pip==25.2
 flask==3.1.2
 moviepy==2.2.1
 openai-whisper==20250625
 transformers==4.55.4
-yt-dlp==2025.8.27
+# Not pinned to an exact version on purpose: YouTube changes often and old
+# yt-dlp releases stop working. [default] includes the yt-dlp-ejs scripts
+# that yt-dlp needs (together with Deno) for YouTube.
+yt-dlp[default]>=2026.10.26
 torch==2.8.0
 Flask-Limiter==3.12

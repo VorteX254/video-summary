@@ -1,10 +1,14 @@
-FROM python:3
+# Pinned: the pinned torch/whisper versions have no wheels for newer Pythons
+FROM python:3.13-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     git \
     && rm -rf /var/lib/apt/lists/*
+
+# yt-dlp needs a JavaScript runtime (Deno) to download from YouTube
+COPY --from=denoland/deno:bin /deno /usr/local/bin/deno
 
 # Set working directory
 WORKDIR /app
